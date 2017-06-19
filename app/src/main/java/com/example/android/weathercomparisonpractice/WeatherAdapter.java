@@ -52,7 +52,7 @@ public class WeatherAdapter extends ArrayAdapter<CityData> {
         // Se encuentra la TextView que muestra la latitud.
         TextView latitudTextView = (TextView) listItemView.findViewById(R.id.latitud);
         // Se asigna este texto a su objeto de la lista en particular según la posición de este.
-        latitudTextView.setText(currentCityData.getmLongitud());
+        latitudTextView.setText(currentCityData.getmLatitud());
 
         // Se devuelve el listItemView (que contiene una ImageView y 3 TextViews para que sea
         // mostrado en la ListView.
