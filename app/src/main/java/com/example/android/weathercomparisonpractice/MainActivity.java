@@ -1,8 +1,11 @@
 package com.example.android.weathercomparisonpractice;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -56,5 +59,17 @@ public class MainActivity extends AppCompatActivity {
 
         WeatherAsyncTask task = new WeatherAsyncTask();
         task.execute(WEATHERMAP_REQUEST_URL);
+
+        weatherListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                // Crea una intent que abrirá la data_view.
+                Intent dataViewIntent = new Intent(MainActivity.this, DataView.class);
+                dataViewIntent.putExtra("POSICION_CIUDAD", position);
+                startActivity(dataViewIntent);
+            }
+        });
+
     }
 }

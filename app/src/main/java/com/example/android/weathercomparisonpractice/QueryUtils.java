@@ -135,35 +135,6 @@ public final class QueryUtils {
                 // Extrae el valor de la key llamada "lat":
                 double latitud = coordinates.getDouble("lat");
 
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "weather".
-                JSONArray weather = currentCityData.getJSONArray("weather");
-
-                // Extrae el valor del JSONObject que hay en la JSONArray weather.
-                JSONObject weatherJsonObject = weather.getJSONObject(0);
-
-                // Extrae el valor de la key llamada "main"
-                String weatherStatus = weatherJsonObject.getString("main");
-
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "main".
-                JSONObject main = currentCityData.getJSONObject("main");
-
-                // Extrae el valor de la key llamada "temp".
-                float temperature = main.getLong("temp");
-                // Extrae el valor de la key llamada "humidity".
-                int humidity = main.getInt("humidity");
-
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "wind".
-                JSONObject wind = currentCityData.getJSONObject("wind");
-
-                // Extrae el valor de la key llamada "speed".
-                long speed = wind.getLong("speed");
-
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "clouds".
-                JSONObject clouds = currentCityData.getJSONObject("clouds");
-
-                // Extrae el valor de la key llamada "all".
-                int all = clouds.getInt("all");
-
                 // Crea un nuevo objeto CityData con los valores requeridos.
                 CityData cityData = new CityData(nombre, longitud, latitud);
 
