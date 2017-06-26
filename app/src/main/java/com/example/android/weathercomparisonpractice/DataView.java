@@ -53,7 +53,7 @@ public class DataView extends AppCompatActivity {
 
         // Muestra la temperatura de la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView temperatureTextView = (TextView) findViewById(R.id.temperatura);
-        temperatureTextView.setText(data.temperature);
+        temperatureTextView.setText(String.valueOf(data.temperature));
 
         // Muestra el tiempo atmosférico de la ciudad en la Ui. (FALTA EXTRAERLO DEL SERVIDOR).
         TextView weatherStatusTextView = (TextView) findViewById(R.id.estado_atmosferico);
@@ -61,15 +61,15 @@ public class DataView extends AppCompatActivity {
 
         // Muestra la humedad de la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView humidityTextView = (TextView) findViewById(R.id.humedad);
-        humidityTextView.setText(data.humidity);
+        humidityTextView.setText(String.valueOf(data.humidity));
 
         // Muestra la velocidad del viento en la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView windTextView = (TextView) findViewById(R.id.viento);
-        windTextView.setText(data.speed);
+        windTextView.setText(String.valueOf(data.speed));
 
         // Muestra la nubosidad de la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView cloudsTextView = (TextView) findViewById(R.id.nubosidad);
-        cloudsTextView.setText(data.all);
+        cloudsTextView.setText(String.valueOf(data.all));
     }
 
     private class dataAsyncTask extends AsyncTask<URL, Void, Data>{

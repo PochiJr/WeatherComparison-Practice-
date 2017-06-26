@@ -63,10 +63,22 @@ public class MainActivity extends AppCompatActivity {
         weatherListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                int identificador;
+                if (position == 0){
+                    identificador = 0;
+                } else if (position == 1){
+                    identificador = 1;
+                } else if (position == 2){
+                    identificador = 2;
+                } else if (position == 3){
+                    identificador = 3;
+                } else if (position == 4){
+                    identificador = 4;
+                }
 
                 // Crea una intent que abrirá la data_view.
                 Intent dataViewIntent = new Intent(MainActivity.this, DataView.class);
-                dataViewIntent.putExtra("POSICION_CIUDAD", position);
+                dataViewIntent.putExtra("ID_CIUDAD", identificador);
                 startActivity(dataViewIntent);
             }
         });
