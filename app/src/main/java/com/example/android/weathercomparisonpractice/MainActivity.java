@@ -1,35 +1,60 @@
 package com.example.android.weathercomparisonpractice;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    //URL que nos proporciona los datos de las 5 ciudades que queremos en este caso.
+    private static final String WEATHERMAP_REQUEST_URL =
+            "http://api.openweathermap.org/data/2.5/group?id=6360360,4544379,2673730,1227603,2186224&appid=27b42a4827346748e8c232cac5ad95a7";
+
+    public static final String LOG_TAG = MainActivity.class.getName();
+    private WeatherAdapter mAdapter;
+
+    // Aquí realizaremos la petición en una tarea secundaria.
+    private class WeatherAsyncTask extends AsyncTask<String, Void, List<CityData>>{
+        @Override
+        protected List<CityData> doInBackground (String... urls){
+            // No realizaremos la request si no hay urls o si el valor de la primera es nulo.
+            if (urls.length < 1 || urls[0]== null){
+                return null;
+            }
+            List<CityData> result = QueryUtils.fetchCityDataData(urls[0]);
+            return result;
+        }
+        @Override
+        protected void onPostExecute (List<CityData> data){
+            // Limpia el adapter de posibles datos anteriores.
+            mAdapter.clear();
+            // Si hay una lista de CityData válida los añade al adapter y se actualizará la
+            // ListView.
+            if (data != null && !data.isEmpty()){
+                mAdapter.addAll(data);
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weather_activity);
 
-        ArrayList<CityData> cityDatas = new ArrayList<>();
-        cityDatas.add(new CityData(R.mipmap.escudo_doninos, "Doñinos de Salamanca", "-5.75449", "40.96006" ));
-        cityDatas.add(new CityData(R.mipmap.escudo_oklahoma, "Oklahoma", "-97.503281", "35.492088"));
-        cityDatas.add(new CityData(R.mipmap.escudo_estocolmo, "Stockholm", "18.064899", "59.332581"));
-        cityDatas.add(new CityData(R.mipmap.escudo_sri_lanka, "Democratic Socialist Republic of Sri Lanka", "81", "7"));
-        cityDatas.add(new CityData(R.mipmap.escudo_nueva_zelanda, "New Zealand", "174", "-42"));
-
-        // Crea un ArrayAdapter de cityDatas
-        final WeatherAdapter weatherAdapter = new WeatherAdapter(this, cityDatas);
         // Encuentra la ListView que creamos en el weather_activity.xml.
         ListView weatherListView = (ListView) findViewById(R.id.list);
+
+        // Crea un ArrayAdapter de cityDatas
+        mAdapter = new WeatherAdapter(this, new ArrayList<CityData>());
+
         // Se coloca el Adapter en la ListView.
-        weatherListView.setAdapter(weatherAdapter);
+        weatherListView.setAdapter(mAdapter);
+
+        WeatherAsyncTask task = new WeatherAsyncTask();
+        task.execute(WEATHERMAP_REQUEST_URL);
     }
-
-
-
-
-
 }

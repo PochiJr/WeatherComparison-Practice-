@@ -5,37 +5,30 @@ package com.example.android.weathercomparisonpractice;
  */
 
 public class CityData {
-    // Imagen que muestra el escudo de la ciudad.
-    private int mImagenId;
     // Nombre de la ciudad.
     private String mNombre;
     // Longitud en coordenadas.
-    private String mLongitud;
+    private double mLongitud;
     // Latitud en coordenadas.
-    private String mLatitud;
+    private double mLatitud;
 
     //Creamos el objeto CityData con sus 4 parámetros (ImagenId, Nombre, Longitud y Latitud).
-    public CityData (int imagenId, String nombre, String longitud, String latitud){
-        mImagenId = imagenId;
+    public CityData (String nombre, double longitud, double latitud){
         mNombre = nombre;
         mLongitud = longitud;
         mLatitud = latitud;
     }
-    // Ahora obtenemos el valor de las variables mImagenId, mNombre, mLongitud y mLatitud;
+    // Ahora obtenemos el valor de las variables mNombre, mLongitud y mLatitud;
     // respectivamente.
-    public int getmImagenId(){
-        return mImagenId;
-    }
-
     public String getmNombre() {
         return mNombre;
     }
 
-    public String getmLongitud() {
+    public double getmLongitud() {
         return mLongitud;
     }
 
-    public String getmLatitud() {
+    public double getmLatitud() {
         return mLatitud;
     }
 }
