@@ -13,8 +13,7 @@
         android:paddingLeft="16dp"
         android:gravity="center_vertical"
         android:textSize="14sp"
-        android:textColor="@color/infoPpal"
-        android:text="salamanca"/>
+        android:textColor="@color/infoPpal" />
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -25,7 +24,6 @@
             android:id="@+id/longitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4573636"
             android:textColor="@color/infoSecundaria"
             android:textSize="12sp"
             android:layout_gravity="end"/>
@@ -33,7 +31,6 @@
             android:id="@+id/latitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3345345"
             android:textColor="@color/infoSecundaria"
             android:textSize="12sp"
             android:layout_gravity="end"/>

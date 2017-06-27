@@ -14,13 +14,13 @@ public class Data {
     // Humedad de la ciudad;
     public final int humidity;
     // Viento de la ciudad;
-    public final int speed;
+    public final double speed;
     // Nubosidad de la ciudad.
     public final int all;
 
     //Creamos el objeto Data con sus 6 parámetros (nombre, temperatura, tiempo, humedad, viento y nubosidad).
     public Data (String dataName, int dataTemperature, String dataWeatherStatus, int dataHumidity,
-                 int dataSpeed, int dataAll){
+                 double dataSpeed, int dataAll){
         name = dataName;
         temperature = dataTemperature;
         weatherStatus = dataWeatherStatus;

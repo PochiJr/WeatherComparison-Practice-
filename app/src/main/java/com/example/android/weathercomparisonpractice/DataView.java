@@ -28,19 +28,23 @@ public class DataView extends AppCompatActivity {
     public static final String LOG_TAG_2 = DataView.class.getName();
 
     //URL que nos proporciona los datos de las 5 ciudades que queremos en este caso.
-    private static final String WEATHERMAP_REQUEST_URL =
-            "http://api.openweathermap.org/data/2.5/group?id=6360360,4544379,2673730,1227603,2186224&appid=27b42a4827346748e8c232cac5ad95a7";
-
+    private String WEATHERMAP_REQUEST_URL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.data_view);
+
         Bundle extras = getIntent().getExtras();
-        int datos;
+        int datos = 0;
 
         if (extras != null) {
-            datos = extras.getInt("POSICION_CIUDAD");
+            datos = extras.getInt("ID_CIUDAD");
+            WEATHERMAP_REQUEST_URL =
+                    "http://api.openweathermap.org/data/2.5/weather?id=" + String.valueOf(datos) + "&units=metric&appid=27b42a4827346748e8c232cac5ad95a7";
+
+        } else {
+            // error fatal el mundo debe destruirse asi que esto no debe nunca pasar
         }
         dataAsyncTask task = new dataAsyncTask();
         task.execute();
@@ -53,23 +57,40 @@ public class DataView extends AppCompatActivity {
 
         // Muestra la temperatura de la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView temperatureTextView = (TextView) findViewById(R.id.temperatura);
-        temperatureTextView.setText(String.valueOf(data.temperature));
+        temperatureTextView.setText(getTemperatureString(data.temperature));
 
         // Muestra el tiempo atmosférico de la ciudad en la Ui. (FALTA EXTRAERLO DEL SERVIDOR).
         TextView weatherStatusTextView = (TextView) findViewById(R.id.estado_atmosferico);
-        weatherStatusTextView.setText(data.weatherStatus);
+        weatherStatusTextView.setText((data.weatherStatus));
 
         // Muestra la humedad de la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView humidityTextView = (TextView) findViewById(R.id.humedad);
-        humidityTextView.setText(String.valueOf(data.humidity));
+        humidityTextView.setText(getHumidityString(data.humidity));
 
         // Muestra la velocidad del viento en la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView windTextView = (TextView) findViewById(R.id.viento);
-        windTextView.setText(String.valueOf(data.speed));
+        windTextView.setText(getSpeedString(data.speed));
 
         // Muestra la nubosidad de la ciudad en la Ui. (FALTA EXTRAERLA DEL SERVIDOR).
         TextView cloudsTextView = (TextView) findViewById(R.id.nubosidad);
-        cloudsTextView.setText(String.valueOf(data.all));
+        cloudsTextView.setText(getCloudsString(data.all));
+    }
+
+    // Devuelve una String con la temperatura en grados Celsius + el símbolo ºC.
+    private String getTemperatureString (int temperature){
+        return temperature + "ºC";
+    }
+    // Devuelve una String con la humedad + el símbolo %.
+    private String getHumidityString (int humidity){
+        return humidity + "%";
+    }
+    // Devuelve una String con la velocidad del viento + "m/s".
+    private String getSpeedString (double speed){
+        return speed + "m/s";
+    }
+    // Devuelve una String con la nubosidad más el símbolo %.
+    private String getCloudsString (int all){
+        return all + "%";
     }
 
     private class dataAsyncTask extends AsyncTask<URL, Void, Data>{
@@ -164,46 +185,41 @@ public class DataView extends AppCompatActivity {
     private Data extractFeatureFromJson (String dataJSON){
         try {
             JSONObject baseJsonObject = new JSONObject(dataJSON);
-            JSONArray cityDataArray = baseJsonObject.getJSONArray("list");
 
-            for (int i = 0; i < cityDataArray.length(); i++) {
-                JSONObject currentCityData = cityDataArray.getJSONObject(i);
+            // Extrae el valor de la key llamada "name".
+            String name = baseJsonObject.getString("name");
 
-                // Extrae el valor de la key llamada "name".
-                String name = currentCityData.getString("name");
+            // Escoge la JSONArray asociada a la key "weather".
+            JSONArray weather = baseJsonObject.getJSONArray("weather");
 
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "weather".
-                JSONArray weather = currentCityData.getJSONArray("weather");
+            // Extrae el valor del JSONObject que hay en la JSONArray weather.
+            JSONObject weatherJsonObject = weather.getJSONObject(0);
 
-                // Extrae el valor del JSONObject que hay en la JSONArray weather.
-                JSONObject weatherJsonObject = weather.getJSONObject(0);
+            // Extrae el valor de la key llamada "main"
+            String weatherStatus = weatherJsonObject.getString("main");
 
-                // Extrae el valor de la key llamada "main"
-                String weatherStatus = weatherJsonObject.getString("main");
+            // Escoge el JSONObject asociado a la key "main".
+            JSONObject main = baseJsonObject.getJSONObject("main");
 
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "main".
-                JSONObject main = currentCityData.getJSONObject("main");
+            // Extrae el valor de la key llamada "temp".
+            int temperature = main.getInt("temp");
+            // Extrae el valor de la key llamada "humidity".
+            int humidity = main.getInt("humidity");
 
-                // Extrae el valor de la key llamada "temp".
-                int temperature = main.getInt("temp");
-                // Extrae el valor de la key llamada "humidity".
-                int humidity = main.getInt("humidity");
+            // Escoge el JSONObject asociado a la key "wind".
+            JSONObject wind = baseJsonObject.getJSONObject("wind");
 
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "wind".
-                JSONObject wind = currentCityData.getJSONObject("wind");
+            // Extrae el valor de la key llamada "speed".
+            double speed = wind.getDouble("speed");
 
-                // Extrae el valor de la key llamada "speed".
-                int speed = wind.getInt("speed");
+            // Escoge el JSONObject asociado a la key "clouds".
+            JSONObject clouds = baseJsonObject.getJSONObject("clouds");
 
-                // Por cada dato de ciudad escoge la JSONArray asociado a la key "clouds".
-                JSONObject clouds = currentCityData.getJSONObject("clouds");
+            // Extrae el valor de la key llamada "all".
+            int all = clouds.getInt("all");
 
-                // Extrae el valor de la key llamada "all".
-                int all = clouds.getInt("all");
-
-                // Devuelve un nuevo objeto Data.
-                return new Data(name, temperature, weatherStatus, humidity, speed, all);
-            }
+            // Devuelve un nuevo objeto Data.
+            return new Data(name, temperature, weatherStatus, humidity, speed, all);
 
         } catch (JSONException e){
             Log.e(LOG_TAG_2, "Problema parsing la temperatura en JSON", e);

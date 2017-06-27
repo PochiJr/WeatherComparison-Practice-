@@ -6,9 +6,10 @@
         android:id="@+id/nombre_ciudad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nombre ciudad"
         android:textColor="@color/infoPpal"
         android:layout_centerHorizontal="true"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:paddingTop="26dp"
         android:textSize="26sp"
         />
@@ -16,7 +17,6 @@
         android:id="@+id/temperatura"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="35ºC"
         android:textSize="24sp"
         android:textColor="@color/infoPpal"
         android:layout_centerHorizontal="true"
@@ -26,7 +26,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"
-        android:text="Lluvia"
         android:textColor="@color/infoPpal"
         android:layout_marginLeft="8dp"
         android:layout_alignBottom="@+id/temperatura"/>
@@ -44,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="54%"
         android:layout_marginLeft="40dp"
         android:layout_below="@+id/simplemente_un_id_para_colocar_la_humedad"
         />
@@ -65,7 +63,6 @@
         android:textSize="18sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="14dp"
-        android:text="120m/s"
         android:layout_below="@+id/simplemente_un_id_para_colocar_el_viento"/>
     <TextView
         android:id="@+id/simplemente_un_id_para_colocar_la_nubosidad"
@@ -81,7 +78,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:text="87%"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/simplemente_un_id_para_colocar_la_nubosidad"/>
 </RelativeLayout>
