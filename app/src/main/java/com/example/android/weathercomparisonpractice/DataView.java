@@ -41,7 +41,7 @@ public class DataView extends AppCompatActivity {
         if (extras != null) {
             datos = extras.getInt("ID_CIUDAD");
             WEATHERMAP_REQUEST_URL =
-                    "http://api.openweathermap.org/data/2.5/weather?id=" + String.valueOf(datos) + "&units=metric&appid=27b42a4827346748e8c232cac5ad95a7";
+                    "http://api.openweathermap.org/data/2.5/weather?id=" + String.valueOf(datos) + "&lang=es&units=metric&appid=27b42a4827346748e8c232cac5ad95a7";
 
         } else {
             // error fatal el mundo debe destruirse asi que esto no debe nunca pasar
@@ -196,7 +196,7 @@ public class DataView extends AppCompatActivity {
             JSONObject weatherJsonObject = weather.getJSONObject(0);
 
             // Extrae el valor de la key llamada "main"
-            String weatherStatus = weatherJsonObject.getString("main");
+            String weatherStatus = weatherJsonObject.getString("description");
 
             // Escoge el JSONObject asociado a la key "main".
             JSONObject main = baseJsonObject.getJSONObject("main");

@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:textSize="24sp"
         android:textColor="@color/infoPpal"
+        android:text="20"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/nombre_ciudad"/>
     <TextView
@@ -26,9 +27,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"
+        android:text="sssss"
         android:textColor="@color/infoPpal"
-        android:layout_marginLeft="8dp"
-        android:layout_alignBottom="@+id/temperatura"/>
+        android:layout_below="@+id/temperatura"
+        android:layout_marginLeft="160dp"
+      />
     <TextView
         android:id="@+id/simplemente_un_id_para_colocar_la_humedad"
         android:layout_width="wrap_content"
